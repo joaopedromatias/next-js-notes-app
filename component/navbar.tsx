@@ -1,18 +1,19 @@
 import styled from 'styled-components'
 import Link from 'next/link'
+import createUrl from '../lib/createUrl'
 
 interface Props { 
-    urlNotesNames: string[]
-    displayNotesNames: string[]
+    notesInfos: NotesInfos[]
     children: JSX.Element
 }
 
-export default function NavBar ({ urlNotesNames, displayNotesNames, children }: Props): JSX.Element { 
+export default function NavBar ({ notesInfos, children }: Props): JSX.Element { 
     return <Wrapper>
     <div className='sidebar'>
-        {displayNotesNames.map( (noteName, index) => {
+        {notesInfos.map( (noteInfo, index) => {
+            const { title } = noteInfo;
             return <div key={index} className='note-block'>
-                    <Link className='note-name' href={urlNotesNames[index]}>{ noteName }</Link>
+                    <Link className='note-name' href={createUrl(title)}>{ title }</Link>
                     <div className='line'></div>
                 </div>
         })}

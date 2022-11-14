@@ -1,32 +1,28 @@
 import styled from 'styled-components'
 import NavBar from '../component/NavBar'
 import Button from '../component/button'
-import getNotesRaw from '../lib/getNotesRaw'
-import setNoteUrl from '../lib/setNoteUrl'
-import setNoteDisplay from '../lib/setNoteDisplay'
 import Link from 'next/link'
+import getNotesFileNames from '../lib/getNotesFileNames'
+import getNoteInfo from '../lib/getNoteInfo'
 
 export const getServerSideProps = () => { 
   
-  const notesNames = getNotesRaw();
-  const urlNotesNames = setNoteUrl(notesNames);
-  const displayNotesNames = setNoteDisplay(urlNotesNames);
-
+  const notesNames = getNotesFileNames();
+  const notesInfos = getNoteInfo(notesNames);
+  
   return { 
     props: { 
-      urlNotesNames,
-      displayNotesNames
+      notesInfos
     }
   }
 }
 
 interface Props { 
-  urlNotesNames: string[]
-  displayNotesNames: string[]
+  notesInfos: NotesInfos[]
 }
 
-export default function Home({ urlNotesNames, displayNotesNames }: Props ): JSX.Element {
-  return <NavBar urlNotesNames={urlNotesNames} displayNotesNames={displayNotesNames}>
+export default function Home({ notesInfos }: Props ): JSX.Element {
+  return <NavBar notesInfos={notesInfos}>
     <Wrapper>
       <p>Let&apos;s get started in writing some notes!</p>
       <Link href='/write'><Button text='write new note'></Button></Link>
