@@ -1,9 +1,10 @@
 import styled from 'styled-components'
-import NavBar from '../component/navbar'
+import NavBar from '../component/NavBar'
 import Button from '../component/button'
 import getNotesRaw from '../lib/getNotesRaw'
 import setNoteUrl from '../lib/setNoteUrl'
 import setNoteDisplay from '../lib/setNoteDisplay'
+import Link from 'next/link'
 
 export const getServerSideProps = () => { 
   
@@ -28,7 +29,7 @@ export default function Home({ urlNotesNames, displayNotesNames }: Props ): JSX.
   return <NavBar urlNotesNames={urlNotesNames} displayNotesNames={displayNotesNames}>
     <Wrapper>
       <p>Let&apos;s get started in writing some notes!</p>
-      <Button text='write new note'></Button>
+      <Link href='/write'><Button text='write new note'></Button></Link>
     </Wrapper>
   </NavBar>
 }

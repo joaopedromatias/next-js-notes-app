@@ -40,6 +40,7 @@ font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida San
             text-decoration: none;
             text-transform: capitalize;
             color: inherit;
+            letter-spacing: 1px;
         }
         .line { 
             background-color: black;
