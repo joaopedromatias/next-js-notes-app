@@ -9,12 +9,13 @@ import setHttpCookie from '../lib/setHttpCookie';
 import auth from '../lib/auth'
 import createUserDir from '../lib/createUserDir'
 import getTokenSignature from '../lib/getTokenSignature'
+import { GetServerSidePropsContext } from 'next'
 
-export const getServerSideProps = ({ req, res }: any) => { 
+export const getServerSideProps = ({ req, res }: GetServerSidePropsContext) => { 
 
   let { userToken } = req.cookies || null
   let isTokenValid, tokenSignature;
-  let notesInfos: any;
+  let notesInfos: string[] | NotesInfos[];
 
   if (!userToken) { 
       userToken = createUserToken();
@@ -28,7 +29,7 @@ export const getServerSideProps = ({ req, res }: any) => {
 
       if (isTokenValid) { 
           const notesNames = getNotesFileNames(tokenSignature);
-          notesInfos = getNotesInfos(notesNames, tokenSignature) || []; 
+          notesInfos = getNotesInfos(notesNames, tokenSignature) as NotesInfos[] || []; 
       } else { 
           notesInfos = []
       }
