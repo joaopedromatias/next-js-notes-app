@@ -20,17 +20,22 @@ export default function NavBar ({ notesInfos, children, currentId }: Props): JSX
         setUpdatedNotesInfos(notesInfos)
     }, [ notesInfos ])
 
-    const handleDeleteNote = async (id: string) => { 
+    const handleDeleteNote = async (id: string, currentNote: boolean) => { 
         const res = await fetch('/api/delete-note', { 
             method: 'DELETE',
             body: JSON.stringify({ id })
         })
 
         if (res.status === 200) {
-            router.push('/write')
+
+            if (currentNote) { 
+                router.push('/write')
+            }
+             
             const res = await fetch('/api/get-notes');
             const newNotesData: NotesInfos[] = await res.json();
             setUpdatedNotesInfos(newNotesData);
+            
         }
     }
 
@@ -45,7 +50,7 @@ export default function NavBar ({ notesInfos, children, currentId }: Props): JSX
             return <div key={index} className={`note-block`}>
                     <div className={`flex ${selected ? 'selected' : ''}`}>
                         <Link className={`note-name`} href={`/note/${id}`}>{ title }</Link>
-                        <TrashIcon selected={selected} onClick={() => handleDeleteNote(id)}/>
+                        <TrashIcon selected={selected} onClick={() => handleDeleteNote(id, selected)}/>
                     </div>
                     <div className='line'></div>
                 </div>
