@@ -1,4 +1,4 @@
-import NavBar from '../../component/NavBar';
+import NavBar from '../../component/navbar';
 import getNotesFileNames from '../../lib/getNotesFileNames'
 import getNotesInfos from '../../lib/getNotesInfos'
 import getNoteInfoById from '../../lib/getNotesInfosById';
@@ -82,7 +82,6 @@ const Note = ({ currentTitle, currentContent, id, notesInfos, newUser, notFound 
     
     useEffect(() => { 
         if (newUser || notFound) { 
-            console.log('veio')
             router.push('/');
         }
     }, [newUser, router, notFound])

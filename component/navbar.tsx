@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import Link from 'next/link'
-import TrashIcon from '../component/icons/Trash'
+import TrashIcon from './icons/Trash'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 

@@ -1,4 +1,4 @@
-import NavBar from '../component/NavBar';
+import NavBar from '../component/navbar';
 import { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import getNotesFileNames from '../lib/getNotesFileNames'

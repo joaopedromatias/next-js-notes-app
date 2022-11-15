@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import Head from 'next/head'
-import Button from './Button'
+import Button from './button'
 import Link from'next/link'
 
 interface Props { 
