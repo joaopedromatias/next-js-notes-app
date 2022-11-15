@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import Link from 'next/link'
 import TrashIcon from '../component/icons/Trash'
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
 interface Props { 
     notesInfos: NotesInfos[]
@@ -12,6 +13,8 @@ interface Props {
 export default function NavBar ({ notesInfos, children, currentId }: Props): JSX.Element { 
 
     const [updatedNotesInfos, setUpdatedNotesInfos] = useState<NotesInfos[]>(notesInfos);
+    
+    const router = useRouter()
 
     useEffect(() => { 
         setUpdatedNotesInfos(notesInfos)
@@ -23,7 +26,8 @@ export default function NavBar ({ notesInfos, children, currentId }: Props): JSX
             body: JSON.stringify({ id })
         })
 
-        if (res.status === 200) { 
+        if (res.status === 200) {
+            router.push('/write')
             const res = await fetch('/api/get-notes');
             const newNotesData: NotesInfos[] = await res.json();
             setUpdatedNotesInfos(newNotesData);
