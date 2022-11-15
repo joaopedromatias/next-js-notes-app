@@ -19,3 +19,7 @@ The project has **3 NextJS API routes** to run server side code in order to inte
 ### Style 🎨
 
 For the stylization I used Styled Components, which is a CSS-in-JS library.
+
+### Security 🔒
+
+All the users inputs are encoded, so special characters are not rawly saved into the file system.

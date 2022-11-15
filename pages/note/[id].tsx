@@ -5,34 +5,9 @@ import getNoteInfoById from '../../lib/getNotesInfosById';
 import { useRef, useEffect, useState, ChangeEvent } from 'react';
 import styled from 'styled-components';
 
-export const getStaticPaths = () => { 
+export const getServerSideProps = (context: any) => { 
 
-    const notesNames = getNotesFileNames();
-    const notesInfos: NotesInfos[] = getNotesInfos(notesNames) as NotesInfos[];
-    
-    const paths = notesInfos.map(noteInfo => { 
-        return { 
-            params: { 
-                id: String(noteInfo.id)
-            }
-        }
-    })
-
-    return { 
-        paths,
-        fallback: false
-    }
-}
-
-interface Args { 
-    params: { 
-        id: string
-    }    
-}
-
-export const getStaticProps = ({ params }: Args) => { 
-
-    const { id } = params
+    const { id } = context.params
     
     const { title, content } = getNoteInfoById(id) as NotesInfos;
 

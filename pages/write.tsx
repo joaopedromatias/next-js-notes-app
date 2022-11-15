@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import getNotesFileNames from '../lib/getNotesFileNames'
 import getNotesInfos from '../lib/getNotesInfos'
 
-export const getStaticProps = () => {
+export const getServerSideProps = () => {
   
     const notesNames = getNotesFileNames();
     const notesInfos = getNotesInfos(notesNames);
