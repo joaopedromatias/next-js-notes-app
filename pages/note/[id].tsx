@@ -2,7 +2,7 @@ import NavBar from '../../component/NavBar';
 import getNotesFileNames from '../../lib/getNotesFileNames'
 import getNotesInfos from '../../lib/getNotesInfos'
 import getNoteInfoById from '../../lib/getNotesInfosById';
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, ChangeEvent } from 'react';
 import styled from 'styled-components';
 
 export const getStaticPaths = () => { 
@@ -59,16 +59,17 @@ interface Props {
 const Note = ({title, content, id, notesInfos}: Props): JSX.Element => { 
     
     const [updatedNotesInfos, setUpdatedNotesInfos] = useState<NotesInfos[]>(notesInfos);
-    const [editMode, setEditMode] = useState<boolean>(false)
+
+    const [newTitle, setNewTitle] = useState<string>('');
+    const [newBody, setNewBody] = useState<string>('');
 
     const noteTitle = useRef({} as HTMLInputElement);
     const noteBody = useRef({} as HTMLTextAreaElement);
-    const [noteId, setNoteId] = useState<string>('');
+    const [noteId, setNoteId] = useState<string>(id);
     
     useEffect(() => { 
         noteTitle.current.focus();
-        setNoteId(String(Date.now()));
-    }, [])
+    }, []);
   
     const getNoteTitle = () => {
         return noteTitle.current.value // securely encode this!
@@ -79,29 +80,37 @@ const Note = ({title, content, id, notesInfos}: Props): JSX.Element => {
     }
   
     const saveChanges = async () => { 
-  
-        if (editMode) { 
-            const noteContent = getNoteContent();
-            const noteTitle = getNoteTitle();
-    
-            const res = await fetch('/api/save-note', { 
-                method: 'POST',
-                body: JSON.stringify({ noteTitle, noteContent, noteId })
-            });
-    
-            if (res.status === 201) { 
+
+        const noteContent = getNoteContent();
+        const noteTitle = getNoteTitle();
+
+        const res = await fetch('/api/update-note', {
+            method: 'PATCH',
+            body: JSON.stringify({ noteTitle, noteContent, noteId })
+        });
+
+        if (res.status === 201) { 
             const res = await fetch('/api/get-notes');
             const newNotesData: NotesInfos[] = await res.json();
             setUpdatedNotesInfos(newNotesData);
-            }
         }
+    }
+
+    const saveChangesTitle = (e: ChangeEvent<HTMLInputElement>) => { 
+        setNewTitle(e.target.value);
+        saveChanges();
+    }
+
+    const saveChangesBody = (e: ChangeEvent<HTMLTextAreaElement>) => { 
+        setNewBody(e.target.value);
+        saveChanges();
     }
 
     return <NavBar notesInfos={updatedNotesInfos}>
         <Wrapper>
-          <input spellCheck={false} className="title" onChange={saveChanges} ref={noteTitle} value={title}/>
+          <input spellCheck={false} className="title" onChange={saveChangesTitle} ref={noteTitle} value={ newTitle || title}/>
           <hr />
-          <textarea spellCheck={false} className="note" onChange={saveChanges} ref={noteBody} value={content}/>
+          <textarea spellCheck={false} className="note" onChange={saveChangesBody} ref={noteBody} value={ newBody || content}/>
         </Wrapper>
     </NavBar>
 }
