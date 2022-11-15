@@ -8,5 +8,10 @@ export default function getNoteInfoById (id: string) {
     const fileContent = fs.readFileSync(fileDir, {encoding: 'utf-8'})
     const matterResult = matter(fileContent);
 
-    return {...matterResult.data};
+    let { content, title } = matterResult.data
+
+    content = decodeURI(content);
+    title = decodeURI(title);
+
+    return { content, id, title }
 }

@@ -5,7 +5,7 @@ import Link from 'next/link'
 import getNotesFileNames from '../lib/getNotesFileNames'
 import getNotesInfos from '../lib/getNotesInfos'
 
-export const getServerSideProps = () => { 
+export const getServerSideProps = (context: any) => { 
   
   const notesNames = getNotesFileNames();
   const notesInfos = getNotesInfos(notesNames);

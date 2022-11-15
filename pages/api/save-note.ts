@@ -15,9 +15,9 @@ export default function handler(req: NextApiRequest,res: NextApiResponse<Data>) 
     const noteFilePath = path.join(process.cwd(), 'notes', noteFileName)
 
     const noteWrite = `---
-title: ${noteTitle}
+title: '${noteTitle}'
 id: ${noteId}
-content: ${noteContent}
+content: '${noteContent}'
 ---
 `
 

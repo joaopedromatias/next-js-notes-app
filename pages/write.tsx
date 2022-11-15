@@ -34,11 +34,11 @@ export default function Write ({ notesInfos }: Props): JSX.Element {
   }, [])
 
   const getNoteTitle = () => {
-      return noteTitle.current.value // securely encode this!
+      return encodeURI(noteTitle.current.value) // securely encode this!
   }
 
   const getNoteContent = () => { 
-      return noteBody.current.value // securely encode this!
+      return encodeURI(noteBody.current.value) // securely encode this!
   }
 
   const saveChanges = async () => { 

@@ -34,7 +34,7 @@ export const getStaticProps = ({ params }: Args) => {
 
     const { id } = params
     
-    const {title, content} = getNoteInfoById(id) as NotesInfos;
+    const { title, content } = getNoteInfoById(id) as NotesInfos;
 
     const notesNames = getNotesFileNames();
     const notesInfos = getNotesInfos(notesNames);
@@ -58,6 +58,8 @@ interface Props {
 
 const Note = ({title, content, id, notesInfos}: Props): JSX.Element => { 
     
+    const noteId = id
+
     const [updatedNotesInfos, setUpdatedNotesInfos] = useState<NotesInfos[]>(notesInfos);
 
     const [newTitle, setNewTitle] = useState<string>('');
@@ -65,18 +67,17 @@ const Note = ({title, content, id, notesInfos}: Props): JSX.Element => {
 
     const noteTitle = useRef({} as HTMLInputElement);
     const noteBody = useRef({} as HTMLTextAreaElement);
-    const [noteId, setNoteId] = useState<string>(id);
     
     useEffect(() => { 
         noteTitle.current.focus();
     }, []);
   
     const getNoteTitle = () => {
-        return noteTitle.current.value // securely encode this!
+        return encodeURI(noteTitle.current.value) // securely encode this!
     }
   
     const getNoteContent = () => { 
-        return noteBody.current.value // securely encode this!
+        return encodeURI(noteBody.current.value) // securely encode this!
     }
   
     const saveChanges = async () => { 
