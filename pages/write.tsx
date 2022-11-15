@@ -2,12 +2,12 @@ import NavBar from '../component/NavBar';
 import { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import getNotesFileNames from '../lib/getNotesFileNames'
-import getNoteInfo from '../lib/getNoteInfo'
+import getNotesInfos from '../lib/getNotesInfos'
 
 export const getServerSideProps = () => {
   
     const notesNames = getNotesFileNames();
-    const notesInfos = getNoteInfo(notesNames);
+    const notesInfos = getNotesInfos(notesNames);
 
   return { 
     props: { 

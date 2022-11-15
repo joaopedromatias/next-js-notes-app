@@ -3,12 +3,12 @@ import NavBar from '../component/NavBar'
 import Button from '../component/button'
 import Link from 'next/link'
 import getNotesFileNames from '../lib/getNotesFileNames'
-import getNoteInfo from '../lib/getNoteInfo'
+import getNotesInfos from '../lib/getNotesInfos'
 
 export const getServerSideProps = () => { 
   
   const notesNames = getNotesFileNames();
-  const notesInfos = getNoteInfo(notesNames);
+  const notesInfos = getNotesInfos(notesNames);
   
   return { 
     props: { 

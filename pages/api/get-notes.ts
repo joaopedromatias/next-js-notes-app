@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import getNotesFileNames from '../../lib/getNotesFileNames'
-import getNoteInfo from '../../lib/getNoteInfo'
+import getNoteInfo from '../../lib/getNotesInfos'
 
 type Data = NotesInfos[]
 

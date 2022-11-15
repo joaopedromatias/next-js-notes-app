@@ -3,6 +3,7 @@ declare global {
         content: string
         id: string
         title: string
+        url: string
       }
 }
 

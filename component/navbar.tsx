@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import Link from 'next/link'
-import createUrl from '../lib/createUrl'
 
 interface Props { 
     notesInfos: NotesInfos[]
@@ -11,9 +10,9 @@ export default function NavBar ({ notesInfos, children }: Props): JSX.Element {
     return <Wrapper>
     <div className='sidebar'>
         {notesInfos.map( (noteInfo, index) => {
-            const { title } = noteInfo;
+            const { title, id } = noteInfo;
             return <div key={index} className='note-block'>
-                    <Link className='note-name' href={createUrl(title)}>{ title }</Link>
+                    <Link className='note-name' href={`/note/${id}`}>{ title }</Link>
                     <div className='line'></div>
                 </div>
         })}
