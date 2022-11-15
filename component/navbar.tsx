@@ -58,7 +58,7 @@ font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida San
     background-color: #ededed;
     border: .5px black solid; 
     height: calc(100vh - 70px);
-    .note-block { 
+        .note-block { 
         padding: 5px;
         margin: 10px 10px;
         .flex { 
@@ -73,7 +73,6 @@ font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida San
                 width: 85%;
         }
         }
-        
         .line { 
             background-color: black;
             width: 100%;

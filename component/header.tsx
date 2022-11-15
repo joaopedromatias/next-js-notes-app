@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 import Head from 'next/head'
+import Button from './Button'
+import Link from'next/link'
 
 interface Props { 
     children: JSX.Element
@@ -10,15 +12,17 @@ const Header = ({ children }: Props): JSX.Element => {
         <Head> 
             <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         </Head>
-        <div className="header"> 
-            <p>This project is a practice on NextJs</p>
-        </div>
+            <div className="header"> 
+                <p>This project is a practice on NextJs</p>
+                <div className='hold-button'>
+                    <Link href='/write'><Button type='secondary' text='New note'></Button></Link>
+                </div>
+            </div>
         { children }
     </Wrapper>
 }
 
 const Wrapper = styled.div`
-// apply mains 
 padding: 0;
 margin: 0;
 .header { 
@@ -32,20 +36,10 @@ margin: 0;
         color: white;
         letter-spacing: 1.2px;
     }
-}
-.container { 
-    display: flex;
-    .sidebar { 
-        scroll-behavior: auto;
-        display: inline-block;
-        width: 20%;
-        background-color: #ededed;
-        border: .5px black solid; 
-        height: calc(100vh - 70px);
-    }
-    .main { 
-        text-align: center;
-        width: calc(100vw - 20%);
+    .hold-button { 
+        position: absolute;
+        margin-top: 11.75px;
+        margin-left: 10px;
     }
 }
 `
