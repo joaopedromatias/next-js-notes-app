@@ -57,6 +57,12 @@ export default function Write ({ notesInfos }: Props): JSX.Element {
       setNoteId(String(Date.now()));
   }, [])
 
+  useEffect(() => { 
+    noteBody.current.value = '';
+    noteTitle.current.value = ''; 
+    setNoteId(String(Date.now()))
+  }, [notesInfos])
+
   const getNoteTitle = () => {
       return encodeURI(noteTitle.current.value) 
   }
@@ -83,12 +89,12 @@ export default function Write ({ notesInfos }: Props): JSX.Element {
   }
 
     return <NavBar notesInfos={updatedNotesInfos} currentId={noteId}>
-        <Wrapper>
-          <input spellCheck={false} className="title" onChange={saveChanges} ref={noteTitle} placeholder={'Note Title...'}/>
-          <hr />
-          <textarea spellCheck={false} className="note" onChange={saveChanges} ref={noteBody} placeholder={'Start writing...'}/>
-        </Wrapper>
-    </NavBar>
+            <Wrapper>
+              <input spellCheck={false} className="title" onChange={saveChanges} ref={noteTitle} placeholder={'Note Title...'}/>
+              <hr />
+              <textarea spellCheck={false} className="note" onChange={saveChanges} ref={noteBody} placeholder={'Start writing...'}/>
+            </Wrapper>
+        </NavBar>
 }
 
 const Wrapper = styled.div`

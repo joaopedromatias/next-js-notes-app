@@ -112,12 +112,12 @@ const Note = ({currentTitle, currentContent, id, notesInfos}: Props): JSX.Elemen
     }
 
     return <NavBar notesInfos={updatedNotesInfos} currentId={id}>
-        <Wrapper>
-          <input spellCheck={false} className="title" onChange={saveChangesTitle} ref={noteTitle} value={ newTitle || currentTitle}/>
-          <hr />
-          <textarea spellCheck={false} className="note" onChange={saveChangesBody} ref={noteBody} value={ newBody || currentContent}/>
-        </Wrapper>
-    </NavBar>
+            <Wrapper>
+              <input spellCheck={false} className="title" onChange={saveChangesTitle} ref={noteTitle} value={ newTitle || currentTitle}/>
+              <hr />
+              <textarea spellCheck={false} className="note" onChange={saveChangesBody} ref={noteBody} value={ newBody || currentContent}/>
+            </Wrapper>
+        </NavBar>
 }
 
 const Wrapper = styled.div`

@@ -47,11 +47,12 @@ interface Props {
 
 export default function Home({ notesInfos }: Props ): JSX.Element {
   return <NavBar notesInfos={notesInfos}>
-    <Wrapper>
-      <p>Let&apos;s get started in writing some notes!</p>
-      <Link href='/write'><Button text='write new note'></Button></Link>
-    </Wrapper>
-  </NavBar>
+      <Wrapper>
+        <p>Let&apos;s get started in writing some notes!</p>
+        <Link href='/write'><Button text='write new note'></Button></Link>
+      </Wrapper>
+    </NavBar>
+
 }
 
 const Wrapper = styled.div`
