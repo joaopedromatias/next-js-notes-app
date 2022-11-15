@@ -72,8 +72,9 @@ const Note = ({currentTitle, currentContent, id, notesInfos}: Props): JSX.Elemen
     const noteBody = useRef({} as HTMLTextAreaElement);
     
     useEffect(() => { 
-        noteTitle.current.focus();
-    }, []);
+        setNewTitle('');
+        setNewBody('');
+    }, [id])
   
     const getNoteTitle = () => {
         return encodeURI(noteTitle.current.value) 

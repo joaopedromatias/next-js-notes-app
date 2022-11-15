@@ -9,9 +9,10 @@ import setHttpCookie from '../lib/setHttpCookie';
 import auth from '../lib/auth'
 import createUserDir from '../lib/createUserDir'
 import getTokenSignature from '../lib/getTokenSignature'
+import { useEffect } from 'react'
 
 export const getServerSideProps = ({ req, res }: any) => { 
-  
+
   let { userToken } = req.cookies || null
   let isTokenValid, tokenSignature;
   let notesInfos: any;
