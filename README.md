@@ -2,6 +2,10 @@
 
 This is an application built for practicing **NextJS**
 
+### Demonstration 📺
+
+https://user-images.githubusercontent.com/90068133/202032890-20b7b971-7464-4558-aa7f-7ef958219313.mov
+
 ### Pre Renderization ⚡
 
 All the pages are **pre-rendered** with **Server Side Rendering**, which means that all pre-renderization runs on each user request. If it was an application with static data, the right thing to do would be to use the **Static Site Generation** for performance improvements (then the pre-renderization would only happend at the build time).
