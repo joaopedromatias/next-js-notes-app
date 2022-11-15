@@ -67,6 +67,7 @@ font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida San
     background-color: #f5f5f5;
     border: .5px black solid; 
     height: calc(100vh - 70px);
+    overflow: auto;
         .note-block { 
         padding: 5px;
         margin: 10px 10px;
