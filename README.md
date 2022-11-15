@@ -1,8 +1,8 @@
 # NextJS Note App 📝
 
-#### This is an application built for practicing `**NextJS**`
+### This is an application built for practicing `NextJS`
 
-### Demonstration 📺
+## Demonstration 📺
 
 https://user-images.githubusercontent.com/90068133/202032890-20b7b971-7464-4558-aa7f-7ef958219313.mov
 
