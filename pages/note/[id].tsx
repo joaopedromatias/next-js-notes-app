@@ -4,20 +4,48 @@ import getNotesInfos from '../../lib/getNotesInfos'
 import getNoteInfoById from '../../lib/getNotesInfosById';
 import { useRef, useEffect, useState, ChangeEvent } from 'react';
 import styled from 'styled-components';
+import createUserToken from '../../lib/createToken';
+import auth from '../../lib/auth'
+import setHttpCookie from '../../lib/setHttpCookie';
+import createUserDir from '../../lib/createUserDir';
+import getTokenSignature from '../../lib/getTokenSignature';
 
-export const getServerSideProps = (context: any) => { 
+export const getServerSideProps = ({ req, params, res }: any) => { 
 
-    const { id } = context.params
-    
-    const { title, content } = getNoteInfoById(id) as NotesInfos;
+    const id = params.id
 
-    const notesNames = getNotesFileNames();
-    const notesInfos = getNotesInfos(notesNames);
+    let { userToken } = req.cookies || null
+    let isTokenValid, currentTitle, currentContent, tokenSignature: string | undefined;
+    let notesInfos: any;
+
+    if (!userToken) { 
+        userToken = createUserToken();
+        tokenSignature = getTokenSignature(userToken);
+        createUserDir(tokenSignature);
+        setHttpCookie(userToken, req, res);
+        notesInfos = []
+    } else { 
+        isTokenValid = auth(userToken)
+        tokenSignature = getTokenSignature(userToken)
+
+        if (isTokenValid) { 
+
+            const { title, content } = getNoteInfoById(id, tokenSignature) as NotesInfos;
+            currentTitle = title
+            currentContent = content
+
+            const notesNames = getNotesFileNames(tokenSignature); 
+            notesInfos = getNotesInfos(notesNames, tokenSignature) || []; 
+        
+        } else { 
+            notesInfos = []
+        }
+    }
 
     return { 
         props: { 
-            title,
-            content,
+            currentTitle,
+            currentContent,
             id,
             notesInfos
         }
@@ -25,13 +53,13 @@ export const getServerSideProps = (context: any) => {
 }
 
 interface Props { 
-    title: string
-    content: string
+    currentTitle: string
+    currentContent: string
     id: string
     notesInfos: NotesInfos[]
 }
 
-const Note = ({title, content, id, notesInfos}: Props): JSX.Element => { 
+const Note = ({currentTitle, currentContent, id, notesInfos}: Props): JSX.Element => { 
     
     const noteId = id
 
@@ -48,11 +76,11 @@ const Note = ({title, content, id, notesInfos}: Props): JSX.Element => {
     }, []);
   
     const getNoteTitle = () => {
-        return encodeURI(noteTitle.current.value) // securely encode this!
+        return encodeURI(noteTitle.current.value) 
     }
   
     const getNoteContent = () => { 
-        return encodeURI(noteBody.current.value) // securely encode this!
+        return encodeURI(noteBody.current.value)
     }
   
     const saveChanges = async () => { 
@@ -84,9 +112,9 @@ const Note = ({title, content, id, notesInfos}: Props): JSX.Element => {
 
     return <NavBar notesInfos={updatedNotesInfos}>
         <Wrapper>
-          <input spellCheck={false} className="title" onChange={saveChangesTitle} ref={noteTitle} value={ newTitle || title}/>
+          <input spellCheck={false} className="title" onChange={saveChangesTitle} ref={noteTitle} value={ newTitle || currentTitle}/>
           <hr />
-          <textarea spellCheck={false} className="note" onChange={saveChangesBody} ref={noteBody} value={ newBody || content}/>
+          <textarea spellCheck={false} className="note" onChange={saveChangesBody} ref={noteBody} value={ newBody || currentContent}/>
         </Wrapper>
     </NavBar>
 }

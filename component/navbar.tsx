@@ -31,7 +31,7 @@ export default function NavBar ({ notesInfos, children }: Props): JSX.Element {
 
     return <Wrapper>
     <div className='sidebar'>
-        {updatedNotesInfos.map( (noteInfo, index) => {
+        {updatedNotesInfos.length === 0 ? <></> : updatedNotesInfos.map( (noteInfo, index) => {
             const { title, id } = noteInfo;
             return <div key={index} className='note-block'>
                     <div className='flex'>

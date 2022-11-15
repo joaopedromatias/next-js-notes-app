@@ -4,12 +4,36 @@ import Button from '../component/Button'
 import Link from 'next/link'
 import getNotesFileNames from '../lib/getNotesFileNames'
 import getNotesInfos from '../lib/getNotesInfos'
+import createUserToken from '../lib/createToken';
+import setHttpCookie from '../lib/setHttpCookie';
+import auth from '../lib/auth'
+import createUserDir from '../lib/createUserDir'
+import getTokenSignature from '../lib/getTokenSignature'
 
-export const getServerSideProps = (context: any) => { 
+export const getServerSideProps = ({ req, res }: any) => { 
   
-  const notesNames = getNotesFileNames();
-  const notesInfos = getNotesInfos(notesNames);
-  
+  let { userToken } = req.cookies || null
+  let isTokenValid, tokenSignature;
+  let notesInfos: any;
+
+  if (!userToken) { 
+      userToken = createUserToken();
+      tokenSignature = getTokenSignature(userToken);
+      createUserDir(tokenSignature);
+      setHttpCookie(userToken, req, res);
+      notesInfos = []
+  } else { 
+      isTokenValid = auth(userToken)
+      tokenSignature = getTokenSignature(userToken)
+
+      if (isTokenValid) { 
+          const notesNames = getNotesFileNames(tokenSignature);
+          notesInfos = getNotesInfos(notesNames, tokenSignature) || []; 
+      } else { 
+          notesInfos = []
+      }
+  }
+
   return { 
     props: { 
       notesInfos

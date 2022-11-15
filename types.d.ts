@@ -8,6 +8,10 @@ declare global {
       }
 
     type SpecialCharacters = "&" | "'" | '"' | "<" | ">" | "\\" | "`" | ":"
+
+    interface jwtPayload { 
+        userId: string
+    }
 }
 
 export {}
