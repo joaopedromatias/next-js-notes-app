@@ -1,26 +1,26 @@
 # NextJS Note App 📝
 
-This is a study purpose application built for practicing **NextJS**
+This is an application built for practicing **NextJS**
 
 ### Pre Renderization ⚡
 
-All the pages are **pre-rendered** with **Server Side Rendering**, which means that all pre-renderization runs on each users request
+All the pages are **pre-rendered** with **Server Side Rendering**, which means that all pre-renderization runs on each user request. If it was an application with static data, the right thing to do would be to use the **Static Site Generation** for performance improvements (then the pre-renderization would only happend at the build time).
 
 ### Dynamic Routing 🛣️
 
-The project features **dynamic routing** based on the note id 
+The project features **dynamic routing** based on the note id. 
 
-The notes documents create on the UI are kept on the file system. If it was a production project, it would need to be switched to a database for performance and security issues.
+The notes documents created on the UI are kept on the file system. If it was a production project, it would need to be switched to a database for performance and security issues.
 
 ### Auth & Security 🔒
 
-When the user gets into the application for the first time, a **Json Web Token** is generated. The notes of that single user will then be stored on a folder inside the `/notes` based on the **JWT signature**.
+When the user gets into the application for the first time, a **Json Web Token** is generated. The notes of that single user will then be stored on a file inside `/notes/jwt_token`.
 
 When the user gets into the application after having a token, the application verify if it is a valid token.
 
-The token is stored on a HttpOnly cookie on the client side.
+The token is stored on a HttpOnly cookie on the client side. It is then passed to the server API by HTTP.
 
-All the users inputs are encoded, so special characters are not rawly saved into the file system.
+All the user inputs are encoded, so special characters are not rawly saved into the file system.
 
 ### API 
 
