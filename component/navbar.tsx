@@ -47,13 +47,15 @@ export default function NavBar ({ notesInfos, children, currentId }: Props): JSX
             if (String(id) === currentId)( 
                 selected = true
             )
-            return <div key={index} className={`note-block`}>
-                    <div className={`flex ${selected ? 'selected' : ''}`}>
-                        <Link className={`note-name`} href={`/note/${id}`}>{ title }</Link>
-                        <TrashIcon selected={selected} onClick={() => handleDeleteNote(id, selected)}/>
-                    </div>
-                    <div className='line'></div>
+            return <>
+                    <div key={index} className={`note-block ${selected ? 'selected' : ''}`}>
+                        <div className={`flex`}>
+                            <Link className={`note-name`} href={`/note/${id}`}>{ title }</Link>
+                            <TrashIcon onClick={() => handleDeleteNote(id, selected)}/>
+                        </div>
                 </div>
+                <div className='line'></div>
+            </>
         })}
     </div>
     <div className='main'>
@@ -69,26 +71,23 @@ font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida San
     scroll-behavior: auto;
     display: inline-block;
     width: 20%;
-    background-color: #f5f5f5;
+    background-color: #FBFBFA;
     border: .5px black solid; 
     height: calc(100vh - 70px);
     overflow: auto;
-        .note-block { 
-        padding: 5px;
-        margin: 10px 10px;
         .selected { 
-            background-color: #1e1e1e;
-            color: white;
+            background-color: #e7e7e7;
+            color: black;
             border-radius: 5px;
-            border: #1e1e1e 4px solid;
         }
+        .note-block { 
+        padding: 10px;
         .flex { 
             display: flex;
             justify-content: space-between;
             align-items: center;
             .note-name { 
                 text-decoration: none;
-                text-transform: capitalize;
                 color: inherit;
                 letter-spacing: 1px;
                 width: 85%;
@@ -96,13 +95,12 @@ font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida San
                 text-overflow: ellipsis;
             }
         }
-        .line { 
+    }
+    .line { 
             background-color: black;
             width: 100%;
             height: 1px;
-            margin-top: 10px;
         }
-    }
 }
 .main { 
     text-align: center;
