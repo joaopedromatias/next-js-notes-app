@@ -71,6 +71,8 @@ font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida San
                 color: inherit;
                 letter-spacing: 1px;
                 width: 85%;
+                overflow: hidden;
+                text-overflow: ellipsis;
         }
         }
         .line { 
