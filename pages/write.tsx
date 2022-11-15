@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import getNotesFileNames from '../lib/getNotesFileNames'
 import getNotesInfos from '../lib/getNotesInfos'
 
-export const getServerSideProps = () => {
+export const getStaticProps = () => {
   
     const notesNames = getNotesFileNames();
     const notesInfos = getNotesInfos(notesNames);
@@ -22,10 +22,11 @@ interface Props {
 
 export default function Write ({ notesInfos }: Props): JSX.Element { 
   
+  const [updatedNotesInfos, setUpdatedNotesInfos] = useState<NotesInfos[]>(notesInfos);
+
   const noteTitle = useRef({} as HTMLInputElement);
   const noteBody = useRef({} as HTMLTextAreaElement);
   const [noteId, setNoteId] = useState<string>('');
-  const [updatedNotesInfos, setUpdatedNotesInfos] = useState<NotesInfos[]>(notesInfos);
   
   useEffect(() => { 
       noteTitle.current.focus();
@@ -45,15 +46,15 @@ export default function Write ({ notesInfos }: Props): JSX.Element {
         const noteContent = getNoteContent();
         const noteTitle = getNoteTitle();
 
-        const res = await fetch('/api/save', { 
+        const res = await fetch('/api/save-note', { 
             method: 'POST',
             body: JSON.stringify({ noteTitle, noteContent, noteId })
         });
 
         if (res.status === 201) { 
-        const res = await fetch('/api/get-notes');
-        const newNotesData: NotesInfos[] = await res.json();
-        setUpdatedNotesInfos(newNotesData);
+            const res = await fetch('/api/get-notes');
+            const newNotesData: NotesInfos[] = await res.json();
+            setUpdatedNotesInfos(newNotesData);
         }
   }
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import NavBar from '../component/NavBar'
-import Button from '../component/button'
+import Button from '../component/Button'
 import Link from 'next/link'
 import getNotesFileNames from '../lib/getNotesFileNames'
 import getNotesInfos from '../lib/getNotesInfos'

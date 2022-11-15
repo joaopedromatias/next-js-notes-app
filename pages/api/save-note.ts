@@ -11,17 +11,12 @@ export default function handler(req: NextApiRequest,res: NextApiResponse<Data>) 
   if (req.method === 'POST') { 
   
     const { noteTitle, noteContent, noteId } = JSON.parse(req.body);
-    
-    const noteUrl = '/note/' + noteTitle.replace(/\s/g, '-').toLowerCase()
-
     const noteFileName = noteId + '.md'
-
     const noteFilePath = path.join(process.cwd(), 'notes', noteFileName)
 
     const noteWrite = `---
 title: ${noteTitle}
 id: ${noteId}
-url: ${noteUrl}
 content: ${noteContent}
 ---
 `
