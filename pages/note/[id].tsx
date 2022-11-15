@@ -84,8 +84,8 @@ const Note = ({title, content, id, notesInfos}: Props): JSX.Element => {
         const noteContent = getNoteContent();
         const noteTitle = getNoteTitle();
 
-        const res = await fetch('/api/update-note', {
-            method: 'PATCH',
+        const res = await fetch('/api/save-note', {
+            method: 'POST',
             body: JSON.stringify({ noteTitle, noteContent, noteId })
         });
 
