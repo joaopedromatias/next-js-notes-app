@@ -6,9 +6,10 @@ import { useEffect, useState } from 'react'
 interface Props { 
     notesInfos: NotesInfos[]
     children: JSX.Element
+    currentId?: string
 }
 
-export default function NavBar ({ notesInfos, children }: Props): JSX.Element { 
+export default function NavBar ({ notesInfos, children, currentId }: Props): JSX.Element { 
 
     const [updatedNotesInfos, setUpdatedNotesInfos] = useState<NotesInfos[]>(notesInfos);
 
@@ -33,10 +34,14 @@ export default function NavBar ({ notesInfos, children }: Props): JSX.Element {
     <div className='sidebar'>
         {updatedNotesInfos.length === 0 ? <></> : updatedNotesInfos.map( (noteInfo, index) => {
             const { title, id } = noteInfo;
-            return <div key={index} className='note-block'>
-                    <div className='flex'>
-                        <Link className='note-name' href={`/note/${id}`}>{ title }</Link>
-                        <TrashIcon onClick={() => handleDeleteNote(id)}/>
+            let selected = false
+            if (String(id) === currentId)( 
+                selected = true
+            )
+            return <div key={index} className={`note-block`}>
+                    <div className={`flex ${selected ? 'selected' : ''}`}>
+                        <Link className={`note-name`} href={`/note/${id}`}>{ title }</Link>
+                        <TrashIcon selected={selected} onClick={() => handleDeleteNote(id)}/>
                     </div>
                     <div className='line'></div>
                 </div>
@@ -61,6 +66,12 @@ font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida San
         .note-block { 
         padding: 5px;
         margin: 10px 10px;
+        .selected { 
+            background-color: #1e1e1e;
+            color: white;
+            border-radius: 5px;
+            border: #1e1e1e 4px solid;
+        }
         .flex { 
             display: flex;
             justify-content: space-between;
@@ -73,7 +84,7 @@ font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida San
                 width: 85%;
                 overflow: hidden;
                 text-overflow: ellipsis;
-        }
+            }
         }
         .line { 
             background-color: black;

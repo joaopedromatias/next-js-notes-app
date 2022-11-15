@@ -82,7 +82,7 @@ export default function Write ({ notesInfos }: Props): JSX.Element {
         }
   }
 
-    return <NavBar notesInfos={updatedNotesInfos}>
+    return <NavBar notesInfos={updatedNotesInfos} currentId={noteId}>
         <Wrapper>
           <input spellCheck={false} className="title" onChange={saveChanges} ref={noteTitle} placeholder={'Note Title...'}/>
           <hr />

@@ -111,7 +111,7 @@ const Note = ({currentTitle, currentContent, id, notesInfos}: Props): JSX.Elemen
         saveChanges();
     }
 
-    return <NavBar notesInfos={updatedNotesInfos}>
+    return <NavBar notesInfos={updatedNotesInfos} currentId={id}>
         <Wrapper>
           <input spellCheck={false} className="title" onChange={saveChangesTitle} ref={noteTitle} value={ newTitle || currentTitle}/>
           <hr />
