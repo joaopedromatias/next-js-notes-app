@@ -6,14 +6,19 @@ export default function getNoteInfoById (id: string, tokenSignature: string | un
 
     if (tokenSignature) { 
         const fileDir = path.join(process.cwd(), 'notes', tokenSignature, id + '.md');
-        const fileContent = fs.readFileSync(fileDir, {encoding: 'utf-8'})
-        const matterResult = matter(fileContent);
+        
+        try { 
+            const fileContent = fs.readFileSync(fileDir, {encoding: 'utf-8'})
+            const matterResult = matter(fileContent);
     
-        let { content, title } = matterResult.data
-    
-        content = decodeURI(content);
-        title = decodeURI(title);
-    
-        return { content, id, title }
+            let { content, title } = matterResult.data
+        
+            content = decodeURI(content);
+            title = decodeURI(title);
+        
+            return { content, id, title }
+        } catch (err){ 
+            return null
+        }
     }         
 }

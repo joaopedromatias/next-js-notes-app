@@ -10,7 +10,7 @@ import setHttpCookie from '../../lib/setHttpCookie';
 import createUserDir from '../../lib/createUserDir';
 import getTokenSignature from '../../lib/getTokenSignature';
 import type { GetServerSidePropsContext } from 'next'
-
+import { useRouter } from 'next/router';
 
 export const getServerSideProps = ({ req, query, res }: GetServerSidePropsContext) => { 
 
@@ -32,24 +32,37 @@ export const getServerSideProps = ({ req, query, res }: GetServerSidePropsContex
 
         if (isTokenValid) { 
 
-            const { title, content } = getNoteInfoById(id, tokenSignature) as NotesInfos;
-            currentTitle = title
-            currentContent = content
+            const ans = getNoteInfoById(id, tokenSignature) as NotesInfos | null;
 
-            const notesNames = getNotesFileNames(tokenSignature); 
-            notesInfos = getNotesInfos(notesNames, tokenSignature) as NotesInfos[] || []; 
-        
-        } else { 
-            notesInfos = []
-        }
+            if (ans === null) { 
+                return { 
+                    props: { 
+                        notFound: true
+                    }
+                }
+            } else { 
+                const { title, content } = ans;
+                currentTitle = title
+                currentContent = content
+                const notesNames = getNotesFileNames(tokenSignature); 
+                notesInfos = getNotesInfos(notesNames, tokenSignature) as NotesInfos[] || []; 
+
+                return { 
+                    props: { 
+                        currentTitle,
+                        currentContent,
+                        id,
+                        notesInfos,
+                        newUser: false
+                    }
+                }
+            }
+        } 
     }
 
     return { 
         props: { 
-            currentTitle,
-            currentContent,
-            id,
-            notesInfos
+            newUser: true
         }
     }
 }
@@ -59,10 +72,21 @@ interface Props {
     currentContent: string
     id: string
     notesInfos: NotesInfos[]
+    newUser: boolean
+    notFound: true
 }
 
-const Note = ({currentTitle, currentContent, id, notesInfos}: Props): JSX.Element => { 
+const Note = ({ currentTitle, currentContent, id, notesInfos, newUser, notFound }: Props): JSX.Element => { 
     
+    const router = useRouter();
+    
+    useEffect(() => { 
+        if (newUser || notFound) { 
+            console.log('veio')
+            router.push('/');
+        }
+    }, [newUser, router, notFound])
+
     const noteId = id
 
     const [updatedNotesInfos, setUpdatedNotesInfos] = useState<NotesInfos[]>(notesInfos);
@@ -113,7 +137,7 @@ const Note = ({currentTitle, currentContent, id, notesInfos}: Props): JSX.Elemen
         saveChanges();
     }
 
-    return <NavBar notesInfos={updatedNotesInfos} currentId={id}>
+    return newUser || notFound ?  <></> : <NavBar notesInfos={updatedNotesInfos} currentId={id}>
             <Wrapper>
               <input spellCheck={false} className="title" onChange={saveChangesTitle} ref={noteTitle} value={ newTitle || currentTitle}/>
               <hr />
